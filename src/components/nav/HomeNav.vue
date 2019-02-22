@@ -74,7 +74,7 @@
         <div>
           <Carousel autoplay loop>
               <CarouselItem  v-for="(item, index) in marketing.CarouselItems" :key="index">
-                <router-link :to="{path: '/goodsList', query: { sreachData: '电脑'}}">
+                <router-link :to="{path: '/goodsList', query: { searchData: '电脑'}}">
                   <img :src="item">
                 </router-link>
               </CarouselItem>
@@ -82,7 +82,7 @@
         </div>
         <div class="nav-show">
           <div class="nav-show-img" v-for="(item, index) in marketing.activity" :key="index">
-            <router-link :to="{path: '/goodsList', query: { sreachData: '电脑'}}">
+            <router-link :to="{path: '/goodsList', query: { searchData: '电脑'}}">
               <img :src="item">
             </router-link>
           </div>
@@ -100,7 +100,7 @@
             <span class="detail-item-title">{{items.title}}
               <span class="glyphicon glyphicon-menu-right"></span>
             </span>
-            <router-link :to="{path: '/goodsList', query: { sreachData: item }}" v-for="(item, subIndex) in items.tags" :key="subIndex">
+            <router-link :to="{path: '/goodsList', query: { searchData: item }}" v-for="(item, subIndex) in items.tags" :key="subIndex">
               <span class="detail-item">{{item}}</span>
             </router-link>
           </li>
@@ -108,7 +108,7 @@
             <span class="detail-item-title">{{items.title}}
               <span class="glyphicon glyphicon-menu-right"></span>
             </span>
-            <router-link :to="{path: '/goodsList', query: { sreachData: item }}" v-for="(item, subIndex) in items.tags" :key="subIndex">
+            <router-link :to="{path: '/goodsList', query: { searchData: item }}" v-for="(item, subIndex) in items.tags" :key="subIndex">
               <span class="detail-item">{{item}}</span>
             </router-link>
           </li>
@@ -116,7 +116,7 @@
             <span class="detail-item-title">{{items.title}}
               <span class="glyphicon glyphicon-menu-right"></span>
             </span>
-            <router-link :to="{path: '/goodsList', query: { sreachData: item }}" v-for="(item, subIndex) in items.tags" :key="subIndex">
+            <router-link :to="{path: '/goodsList', query: { searchData: item }}" v-for="(item, subIndex) in items.tags" :key="subIndex">
               <span class="detail-item">{{item}}</span>
             </router-link>
           </li>
@@ -124,7 +124,7 @@
             <span class="detail-item-title">{{items.title}}
               <span class="glyphicon glyphicon-menu-right"></span>
             </span>
-            <router-link :to="{path: '/goodsList', query: { sreachData: item }}" v-for="(item, subIndex) in items.tags" :key="subIndex">
+            <router-link :to="{path: '/goodsList', query: { searchData: item }}" v-for="(item, subIndex) in items.tags" :key="subIndex">
               <span class="detail-item">{{item}}</span>
             </router-link>
           </li>
@@ -132,7 +132,7 @@
             <span class="detail-item-title">{{items.title}}
               <span class="glyphicon glyphicon-menu-right"></span>
             </span>
-            <router-link :to="{path: '/goodsList', query: { sreachData: item }}" v-for="(item, subIndex) in items.tags" :key="subIndex">
+            <router-link :to="{path: '/goodsList', query: { searchData: item }}" v-for="(item, subIndex) in items.tags" :key="subIndex">
               <span class="detail-item">{{item}}</span>
             </router-link>
           </li>

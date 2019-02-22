@@ -9,7 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLoading: false, // 是否展示loading动画
-    orderBy: 'sale', // 根据什么字段排序
+    orderBy: 'inventory', // 根据什么字段排序
     goodsInfoByName: [], // 根据商品名称的列表
     goodsDetail: {}, // 商品详情
     goodsInfoByMerchanrtId: [], // 商户商品列表

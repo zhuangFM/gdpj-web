@@ -47,10 +47,8 @@ export const editAddress = (data) => {
 // 添加购物车
 export const addShoppingCart = (data) => {
   return post({
-    url: '/u/cart_add',
-    data: {
-      shoppingCart: data
-    }
+    url: '/api/shopping-cart-module/save_shopping_cart_detail',
+    data: data
   });
 };
 

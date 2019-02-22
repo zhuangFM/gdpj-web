@@ -3,11 +3,11 @@
     <div class="item-detail-show">
       <div class="item-detail-left">
         <div class="item-detail-big-img">
-          <img :src="getGoodsDetailBase.goodsImg[imgIndex]" alt="">
+          <img :src="'static/images/'+getGoodsDetailBase.goodsId+'/'+getGoodsDetailBase.goodsImg[imgIndex]" alt="">
         </div>
         <div class="item-detail-img-row">
           <div class="item-detail-img-small" v-for="(item, index) in getGoodsDetailBase.goodsImg" :key="index" @mouseover="showBigImg(index)">
-            <img :src="item" alt="">
+            <img :src="'static/images/'+getGoodsDetailBase.goodsId+'/'+item" alt="">
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@
           <div class="item-price-left">
             <div class="item-price-row">
               <p>
-                <span class="item-price-title">B I T 价</span>
+                <span class="item-price-title">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格</span>
                 <span class="item-price">￥{{price.toFixed(2)}}</span>
               </p>
             </div>
@@ -52,23 +52,23 @@
           </div>
         </div>
         <!-- 选择颜色 -->
-        <div class="item-select">
-          <div class="item-select-title">
-            <p>选择颜色</p>
-          </div>
-          <div class="item-select-container">
-            <div class="" v-for="(item, index) in getGoodsDetailBase.setMeal" :key="index">
-              <div class="item-select-box" @click="select(index)" :class="{'item-select-box-active': index === selectBoxIndex}">
-                <div class="item-select-img">
-                  <img :src="item.attrImgUrl" alt="">
-                </div>
-                <div class="item-select-intro">
-                  <p>{{item.attrTitle}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!--<div class="item-select">-->
+          <!--<div class="item-select-title">-->
+            <!--<p>选择颜色</p>-->
+          <!--</div>-->
+          <!--<div class="item-select-container">-->
+            <!--<div class="" v-for="(item, index) in getGoodsDetailBase.setMeal" :key="index">-->
+              <!--<div class="item-select-box" @click="select(index)" :class="{'item-select-box-active': index === selectBoxIndex}">-->
+                <!--<div class="item-select-img">-->
+                  <!--<img :src="item.attrImgUrl" alt="">-->
+                <!--</div>-->
+                <!--<div class="item-select-intro">-->
+                  <!--<p>{{item.attrTitle}}</p>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
         <!-- 白条分期 -->
         <div class="item-select">
           <div class="item-select-title">
@@ -110,6 +110,7 @@ export default {
   computed: {
     ...mapState(['goodsInfo']),
     ...mapGetters(['getGoodsDetailBase']),
+    ...mapGetters(['getUserInfo']),
     hirePurchase () {
       const three = this.price * this.count / 3;
       const sex = this.price * this.count / 6;
@@ -150,12 +151,14 @@ export default {
     },
     addShoppingCartBtn () {
       const data = {
+        uid:this.getUserInfo.data.id,
         goods_id: this.getGoodsDetailBase.goodsId,
         merchant_id: this.getGoodsDetailBase.merchantId,
         title: this.getGoodsDetailBase.title,
         count: this.count,
-        package: this.getGoodsDetailBase.setMeal[this.selectBoxIndex]
+        // package: this.getGoodsDetailBase.setMeal[this.selectBoxIndex]
       };
+      console.log(data);
       this.addShoppingCart(data).then(data => {
         if (data) {
           this.$Message.success('添加购物车成功');

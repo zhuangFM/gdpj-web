@@ -8,7 +8,7 @@
         <div class="item-intro-recommend-column">
           <div class="item-recommend-column" v-for="(item, index) in merchantItem" :key="index">
             <div class="item-recommend-img">
-              <img :src="item.img" alt="">
+              <img :src="'static/images/'+item.goodsId+'/'+item.img" alt="">
             </div>
             <div class="item-recommend-intro">
               <span>

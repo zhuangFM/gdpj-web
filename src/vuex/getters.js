@@ -11,15 +11,15 @@ const compare = property => {
 export const goodsInfoByNameFilter = state => {
   const goodsList = [];
   for (const item of state.goodsInfoByName) {
-    console.log(item.basicPrice);
+    console.log(item.price);
     const temp = {
       goodsId: item.id,
-      goodsName: item.goodsName.substring(0, 39) + '...',
-      merchantName: item.merchant.merchantName,
-      merchantId: item.merchant.id,
-      goodsImgs: item.goodsImgs.split(',')[0],
-      price: item.basicPrice,
-      salesNum: item.salesNum
+      goodsName: item.name.substring(0, 39) + '...',
+      merchantName: item.origin,
+      merchantId: item.origin,
+      goodsImgs: item.imagePath.split(',')[0],
+      price: item.price,
+      salesNum: item.inventory
     };
     goodsList.push(temp);
   }
@@ -29,17 +29,17 @@ export const goodsInfoByNameFilter = state => {
 // 获取商品侧边广告栏
 export const merchantItem = state => {
   if (state.goodsInfoByMerchanrtId.length <= 0) return [];
-  const asAll = state.goodsInfoByMerchanrtId.sort(compare('salesNum'));
+  const asAll = state.goodsInfoByMerchanrtId.sort(compare('inventory'));
   const asItem = [];
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < asAll.length && i < 6; i++) {
     const temp = {
       goodsId: asAll[i].id,
-      goodsName: asAll[i].goodsName.substring(0, 30) + '...',
-      merchantName: asAll[i].merchant.merchantName,
-      merchantId: asAll[i].merchant.id,
-      img: asAll[i].goodsImgs.split(',')[0],
-      price: asAll[i].basicPrice,
-      sale: asAll[i].salesNum
+      goodsName: asAll[i].name.substring(0, 30) + '...',
+      merchantName: asAll[i].origin,
+      merchantId: asAll[i].origin,
+      img: asAll[i].imagePath.split(',')[0],
+      price: asAll[i].price,
+      sale: asAll[i].inventory
     };
     asItem.push(temp);
   }
@@ -49,17 +49,17 @@ export const merchantItem = state => {
 // 商家侧边栏
 export const asItem = state => {
   if (state.goodsInfoByName.length <= 0) return [];
-  const asAll = state.goodsInfoByName.sort(compare('salesNum'));
+  const asAll = state.goodsInfoByName.sort(compare('inventory'));
   const asItem = [];
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < asAll.length && i < 6; i++) {
     const temp = {
       goodsId: asAll[i].id,
-      goodsName: asAll[i].goodsName.substring(0, 30) + '...',
-      merchantName: asAll[i].merchant.merchantName,
-      merchantId: asAll[i].merchant.id,
-      goodsImgs: asAll[i].goodsImgs.split(',')[0],
-      price: asAll[i].basicPrice,
-      salesNum: asAll[i].salesNum
+      goodsName: asAll[i].name.substring(0, 30) + '...',
+      merchantName: asAll[i].origin,
+      merchantId: asAll[i].origin,
+      goodsImgs: asAll[i].imagePath.split(',')[0],
+      price: asAll[i].price,
+      salesNum: asAll[i].inventory
     };
     asItem.push(temp);
   }
@@ -68,18 +68,18 @@ export const asItem = state => {
 
 // 获取商品详情基础展示
 export const getGoodsDetailBase = state => {
-  const goodsImgs = state.goodsDetail.goodsImgs ? state.goodsDetail.goodsImgs.split(',') : [];
-  const price = state.goodsDetail.basicPrice;
+  const goodsImgs = state.goodsDetail.imagePath ? state.goodsDetail.imagePath.split(',') : [];
+  const price = state.goodsDetail.price;
   const data = {
     goodsImg: goodsImgs,
     goodsId: state.goodsDetail.id || 0,
-    merchantId: state.goodsDetail.merchant ? state.goodsDetail.merchant.id : 0,
-    title: state.goodsDetail.goodsName,
-    tags: ['满69-20元', '关注产品★送钢化膜', 'BIT配次日达'],
+    merchantId: state.goodsDetail.origin ? state.goodsDetail.origin : 0,
+    title: state.goodsDetail.name,
+    tags: ['满69-20元', '关注产品★送咖啡杯', 'BIT配次日达'],
     discount: ['满148减10', '满218减20', '满288减30'],
     promotion: ['跨店满减', '多买优惠'],
-    salesNum: state.goodsDetail.salesNum,
-    setMeal: state.goodsDetail.goodsAttrs,
+    salesNum: state.goodsDetail.inventory,
+    setMeal: state.goodsDetail.desc,
     price: price
   };
   return data;
@@ -88,11 +88,11 @@ export const getGoodsDetailBase = state => {
 // 获取商品详情
 export const getGoodsDetail = state => {
   const param = [];
-  const desc = state.goodsDetail.goodsDesc ? state.goodsDetail.goodsDesc.split(',') : [];
-  for (const item of state.goodsDetail.goodsDetails || []) {
+  const desc = state.goodsDetail.desc ? state.goodsDetail.desc.split(',') : [];
+  for (const item of state.goodsDetail.desc.split(',') || []) {
     param.push({
-      title: item.detailKey.substring(0, 15),
-      content: item.detailValue.substring(0, 15)
+      title: item.substring(0, 15),
+      content: item.substring(0, 15)
     });
   }
   const data = {
@@ -100,8 +100,8 @@ export const getGoodsDetail = state => {
     goodsDesc: desc || [],
     remarks: {
       goodAnalyse: 90,
-      remarksTags: [ '颜色可人', '实惠优选', '严丝合缝', '极致轻薄', '质量没话说', '比定做还合适', '完美品质', '正品行货', '包装有档次', '不容易发热', '已经买第二个', '是全覆盖' ],
-      remarksNumDetail: [ 2000, 3000, 900, 1 ],
+      remarksTags: ['颜色可人', '实惠优选', '严丝合缝', '极致轻薄', '质量没话说', '比定做还合适', '完美品质', '正品行货', '包装有档次', '不容易发热', '已经买第二个', '是全覆盖'],
+      remarksNumDetail: [2000, 3000, 900, 1],
       detail: [
         {
           username: 'p****1',
@@ -168,4 +168,9 @@ export const seckillsSeconds = state => {
 // 获取收货地址
 export const getAddress = state => {
   return state.address;
+};
+
+// 获取用户信息
+export const getUserInfo = state => {
+  return state.userInfo;
 };

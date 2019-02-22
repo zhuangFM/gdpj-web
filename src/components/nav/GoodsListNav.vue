@@ -3,16 +3,16 @@
     <div class="search-nav">
       <div class="search-nav-container">
         <ul>
-          <li>全部商品分类</li>
+          <li>全部食品分类</li>
           <li><router-link to="/">首页</router-link></li>
-          <li><router-link to="/">服装城</router-link></li>
-          <li><router-link to="/">美妆馆</router-link></li>
-          <li><router-link to="/">BIT超市</router-link></li>
-          <li><router-link to="/">生鲜</router-link></li>
-          <li><router-link to="/">全球购</router-link></li>
-          <li><router-link to="/">闪购</router-link></li>
-          <li><router-link to="/">拍卖</router-link></li>
-          <li><router-link to="/">金融</router-link></li>
+          <li><router-link to="/">三只松鼠</router-link></li>
+          <li><router-link to="/">百草味</router-link></li>
+          <li><router-link to="/">进口零食</router-link></li>
+          <li><router-link to="/">饮料</router-link></li>
+          <li><router-link to="/">奶粉</router-link></li>
+          <li><router-link to="/">巧克力</router-link></li>
+          <li><router-link to="/">蛋糕</router-link></li>
+          <li><router-link to="/">肉干果脯</router-link></li>
         </ul>
       </div>
     </div>

@@ -47,14 +47,14 @@
           <span class="item-class-title">{{computer.title}}</span>
           <ul>
             <li v-for="(item, index) in computer.link" :key="index">
-              <router-link :to="{path: '/goodsList', query: { sreachData: item }}">{{item}}</router-link>
+              <router-link :to="{path: '/goodsList', query: { searchData: item }}">{{item}}</router-link>
             </li>
           </ul>
         </div>
         <div class="item-class-content" v-for="(item, index) in computer.detail" :key="index">
           <div class="item-content-top">
             <div class="item-big-img">
-              <router-link :to="{path: '/goodsList', query: { sreachData: '电脑' }}">
+              <router-link :to="{path: '/goodsList', query: { searchData: '电脑' }}">
                 <img :src="item.bigImg" alt="">
               </router-link>
             </div>
@@ -65,7 +65,7 @@
                   <p class="pt_bi_promo">{{subItem.intro}}</p>
                 </div>
                 <div class="item-four-detail-img">
-                  <router-link :to="{path: '/goodsList', query: { sreachData: subItem.title }}">
+                  <router-link :to="{path: '/goodsList', query: { searchData: subItem.title }}">
                     <img :src="subItem.img" alt="">
                   </router-link>
                 </div>
@@ -74,7 +74,7 @@
           </div>
           <div class="item-content-bottom">
             <div class="item-content-bottom-img" v-for="(subImg, index) in item.itemContent" :key="index">
-              <router-link :to="{path: '/goodsList', query: { sreachData: '电脑' }}">
+              <router-link :to="{path: '/goodsList', query: { searchData: '电脑' }}">
                 <img :src="subImg">
               </router-link>
             </div>
@@ -87,14 +87,14 @@
           <span class="item-class-title">{{eat.title}}</span>
           <ul>
             <li v-for="(item, index) in eat.link" :key="index">
-              <router-link :to="{path: '/goodsList', query: { sreachData: item }}">{{item}}</router-link>
+              <router-link :to="{path: '/goodsList', query: { searchData: item }}">{{item}}</router-link>
             </li>
           </ul>
         </div>
         <div class="item-class-content" v-for="(item, index) in eat.detail" :key="index">
           <div class="item-content-top">
             <div class="item-big-img">
-              <router-link :to="{path: '/goodsList', query: { sreachData: '零食' }}">
+              <router-link :to="{path: '/goodsList', query: { searchData: '零食' }}">
                 <img :src="item.bigImg" alt="">
               </router-link>
             </div>
@@ -105,7 +105,7 @@
                   <p class="pt_bi_promo">{{subItem.intro}}</p>
                 </div>
                 <div class="item-four-detail-img">
-                  <router-link :to="{path: '/goodsList', query: { sreachData: subItem.title }}">
+                  <router-link :to="{path: '/goodsList', query: { searchData: subItem.title }}">
                     <img :src="subItem.img" alt="">
                   </router-link>
                 </div>
@@ -114,7 +114,7 @@
           </div>
           <div class="item-content-bottom">
             <div class="item-content-bottom-img" v-for="(subImg, index) in item.itemContent" :key="index">
-              <router-link :to="{path: '/goodsList', query: { sreachData: '零食' }}">
+              <router-link :to="{path: '/goodsList', query: { searchData: '零食' }}">
                 <img :src="subImg">
               </router-link>
             </div>

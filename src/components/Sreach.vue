@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <i-input v-model="sreachData" size="large" class="sreach" placeholder="输入你想查找的商品">
+      <i-input v-model="searchData" size="large" class="sreach" placeholder="输入你想查找的商品">
         <Button slot="append" icon="ios-search" @click="sreach"></Button>
       </i-input>
       <Tag v-for="(item, index) in promotionTags" :key="index" closable  @on-close="closeTags(index)"><span @click="selectTags(index)">{{item}}</span></Tag>
@@ -14,7 +14,7 @@ export default {
   name: 'Sreach',
   data () {
     return {
-      sreachData: '',
+      searchData: '',
       promotionTags: ['买2免1', '领200神券', '199减100', '薯片5折抢', '充100送20']
     };
   },
@@ -23,10 +23,10 @@ export default {
       this.promotionTags.splice(index, 1);
     },
     selectTags (index) {
-      this.sreachData = this.promotionTags[index];
+      this.searchData = this.promotionTags[index];
     },
     sreach () {
-      this.$router.push({path: '/goodsList', query: { sreachData: this.sreachData }});
+      this.$router.push({path: '/goodsList', query: { searchData: this.searchData }});
     }
   }
 };

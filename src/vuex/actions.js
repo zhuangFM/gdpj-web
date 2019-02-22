@@ -285,8 +285,8 @@ export const loadGoodsInfo = ({ commit }, data) => {
   commit('SET_LOAD_STATUS', true);
   return new Promise((resolve, reject) => {
     baseApi.getOneGoods(data).then(res => {
-      console.log(res.data.result);
-      commit('SET_GOODS_DETAIL', res.data.result.data);
+      console.log(res.data);
+      commit('SET_GOODS_DETAIL', res.data.foodstuff);
       commit('SET_LOAD_STATUS', false);
     });
   });
@@ -295,19 +295,20 @@ export const loadGoodsInfo = ({ commit }, data) => {
 // 添加购物车
 export const addShoppingCart = ({ commit }, data) => {
   const item = {
-    goodsId: data.goods_id,
+    uid:data.uid,
+    foodstuffId: data.goods_id,
     merchantId: data.merchant_id,
-    attrId: data.package.id,
-    count: data.count,
-    img: data.package.attrImgUrl,
-    attrTitle: data.package.attrTitle,
-    price: data.package.attrPrice,
+    // attrId: data.package.id,
+    amount: data.count,
+    // img: data.package.attrImgUrl,
+    // attrTitle: data.package.attrTitle,
+    // price: data.package.attrPrice,
     title: data.title,
-    goodsCode: data.package.goodsCode
+    // goodsCode: data.package.goodsCode
   };
   return new Promise((resolve, reject) => {
     userApi.addShoppingCart(item).then(res => {
-      if (res.data.rcode === 0) {
+      if (res.data.code === 1) {
         commit('ADD_SHOPPING_CART', item);
         resolve(true);
       } else {
@@ -433,10 +434,11 @@ export const addAddress = ({ commit }, data) => {
 // 按标签获取商品
 export const getGoodsByName = ({ commit }, data) => {
   commit('SET_LOAD_STATUS', true);
+  console.log(data);
   return new Promise((resolve, reject) => {
-    baseApi.goodsList(data).then(res => {
+    baseApi.goodsList(data.foodstuffName,data.orderBy).then(res => {
       console.log(res);
-      commit('SET_GOODS_INFO_BY_NAME', res.data.result.data);
+      commit('SET_GOODS_INFO_BY_NAME', res.data.foodstuffList.list);
       commit('SET_LOAD_STATUS', false);
     });
   });
@@ -446,9 +448,9 @@ export const getGoodsByName = ({ commit }, data) => {
 export const getGoodsByMerchantId = ({ commit }, data) => {
   commit('SET_LOAD_STATUS', true);
   return new Promise((resolve, reject) => {
-    baseApi.goodsList(null, data).then(res => {
-      console.log(res.data.result);
-      commit('SET_GOODS_INFO_BY_MERCHANT_ID', res.data.result.data);
+    baseApi.goodsListByOrigin(data).then(res => {
+      console.log(res);
+      commit('SET_GOODS_INFO_BY_MERCHANT_ID', res.data.foodstuffList.list);
       commit('SET_LOAD_STATUS', false);
     });
   });

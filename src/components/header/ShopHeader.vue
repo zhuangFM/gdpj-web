@@ -7,8 +7,8 @@
           <i class="fa fa-fire"></i>
         </div>
         <div class="shop-title-content">
-          <p><router-link to="/merchant">{{ shopIntro.shopName }}</router-link></p>
-          <p><router-link to="/merchant">{{ shopIntro.slogen }}</router-link></p>
+          <p><router-link to="/">{{ shopIntro.shopName }}</router-link></p>
+          <p><router-link to="/">{{ shopIntro.slogen }}</router-link></p>
         </div>
       </div>
       <div class="shop-another-item">
@@ -32,20 +32,20 @@ export default {
   data () {
     return {
       shopIntro: {
-        shopName: 'Gavin Shop',
-        slogen: 'The Best Thing For You',
+        shopName: '网易严选',
+        slogen: '好的生活，没那么贵',
         showGoods: [
           {
-            img: 'static/img/goodsList/item-show-1.jpg',
-            intro: [ '全身磨砂', '防指纹' ]
+            img: 'static/img/goodsList/show-1.jpg',
+            intro: [ '原肉制作', '鲜嫩弹润' ]
           },
           {
-            img: 'static/img/goodsList/item-show-2.jpg',
-            intro: [ '环保PP材质', '不发黄' ]
+            img: 'static/img/goodsList/show-2.jpg',
+            intro: [ '大块猪后腿原肉切片' ]
           },
           {
-            img: 'static/img/goodsList/item-show-3.jpg',
-            intro: [ '0.4mm纤细', '纤薄手感' ]
+            img: 'static/img/goodsList/show-3.jpg',
+            intro: [ '碳烤风味', '原肉鲜香' ]
           }
         ]
       }

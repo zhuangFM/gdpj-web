@@ -2,13 +2,13 @@
   <div>
     <Sreach></Sreach>
     <ShopHeader></ShopHeader>
-    <GoodsDetailNav></GoodsDetailNav>
+    <!--<GoodsDetailNav></GoodsDetailNav>-->
     <div class="shop-item-path">
       <div class="shop-nav-container">
         <Breadcrumb>
           <BreadcrumbItem to="/">首页</BreadcrumbItem>
-          <BreadcrumbItem to="/goodsList">手机壳</BreadcrumbItem>
-          <BreadcrumbItem>手机保护套</BreadcrumbItem>
+          <BreadcrumbItem to="/goodsList">零食</BreadcrumbItem>
+          <BreadcrumbItem>进口零食</BreadcrumbItem>
         </Breadcrumb>
       </div>
     </div>
@@ -16,7 +16,7 @@
     <ShowGoods></ShowGoods>
     <!-- 商品详细展示 -->
     <ShowGoodsDetail></ShowGoodsDetail>
-    <Footer></Footer>
+    <!--<Footer></Footer>-->
     <Spin size="large" fix v-if="isLoading"></Spin>
   </div>
 </template>
