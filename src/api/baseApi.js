@@ -12,7 +12,7 @@ export const signUp = (user) => {
   return http({
     url: '/api/base-module/register',
     method: 'POST',
-    data: user,
+    data: user
   });
 };
 
@@ -33,12 +33,12 @@ export const goodsList = (goodsName, merchantId, pageSize, pageNum) => {
   const page = pageSize || 1;
   const num = pageNum || 16;
   if (merchantId) param += `merchantId=${merchantId}&`;
-  if (goodsName) param += `goodsName=${goodsName}&`;
-  param += `page=${page}&pageSize=${num}`;
+  if (goodsName) param += `foodstuffName=${goodsName}&`;
+  param += `currentPage=${page}&pageSize=${num}`;
   console.log(param);
   return http({
-    url: `/uGoods_list?${param}`,
-    method: 'POST'
+    url: `/api/base-module/get_foodstuff_by_name?${param}`,
+    method: 'GET'
   });
 };
 

@@ -60,7 +60,7 @@ export default {
           const data = {
             uname: this.formValidate.name,
             phone: this.$route.query.phone,
-            password: this.formValidate.password,
+            password: this.formValidate.password
           };
           this.signUp(data).then(data => {
             if (data) {

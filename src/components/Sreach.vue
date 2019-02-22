@@ -15,7 +15,7 @@ export default {
   data () {
     return {
       sreachData: '',
-      promotionTags: ['买2免1', '领200神券', '199减100', '母婴5折抢', '充100送20']
+      promotionTags: ['买2免1', '领200神券', '199减100', '薯片5折抢', '充100送20']
     };
   },
   methods: {

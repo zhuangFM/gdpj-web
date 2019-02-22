@@ -435,7 +435,7 @@ export const getGoodsByName = ({ commit }, data) => {
   commit('SET_LOAD_STATUS', true);
   return new Promise((resolve, reject) => {
     baseApi.goodsList(data).then(res => {
-      console.log(res.data.result);
+      console.log(res);
       commit('SET_GOODS_INFO_BY_NAME', res.data.result.data);
       commit('SET_LOAD_STATUS', false);
     });

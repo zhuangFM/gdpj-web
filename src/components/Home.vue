@@ -7,7 +7,7 @@
             <div class="user-img">
               <img src="static/img/head.png">
             </div>
-            <p>Gavin</p>
+            <p>fimi.zhuang</p>
           </div>
           <Submenu name="1">
             <template slot="title">
@@ -42,7 +42,7 @@
             <router-view></router-view>
           </transition>
         </Content>
-        <Footer class="layout-footer-center">2018 &copy; Gavin</Footer>
+        <Footer class="layout-footer-center">2019 &copy; fimi.zhuang</Footer>
       </Layout>
     </Layout>
   </div>
