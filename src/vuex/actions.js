@@ -309,7 +309,7 @@ export const addShoppingCart = ({ commit }, data) => {
   return new Promise((resolve, reject) => {
     userApi.addShoppingCart(item).then(res => {
       if (res.data.code === 1) {
-        commit('ADD_SHOPPING_CART', item);
+        commit('ADD_SHOPPING_CART', res.data.result);
         resolve(true);
       } else {
         resolve(false);

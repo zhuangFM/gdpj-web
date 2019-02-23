@@ -12,11 +12,11 @@
           </div>
           <div class="add-info-box-row">
             <div class="add-info-img">
-              <img :src="newShoppingCart.img" alt="">
+              <img :src="'static/images/'+newShoppingCart.foodstuffId+'/'+newShoppingCart.imagePath.split(',')[0]" alt="">
             </div>
             <div class="add-info-intro">
-              <p>{{newShoppingCart.title.substring(0, 30)}} {{newShoppingCart.attr_title}}...</p>
-              <p class="add-info-intro-detail">套餐：{{newShoppingCart.attr_title}}/ 数量：{{newShoppingCart.count}}</p>
+              <p>{{newShoppingCart.foodstuffName.substring(0, 30)}} ...</p>
+              <p class="add-info-intro-detail"> 数量：{{newShoppingCart.amount}}</p>
             </div>
           </div>
         </div>

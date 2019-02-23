@@ -77,13 +77,13 @@ export default {
         },
         {
           title: '图片',
-          key: 'img',
+          key: 'imagePath',
           width: 86,
           render: (h, params) => {
             return h('div', [
               h('img', {
                 attrs: {
-                  src: params.row.img
+                  src: params.row.imagePath.split(",")[0]
                 }
               })
             ]);
@@ -92,18 +92,18 @@ export default {
         },
         {
           title: '标题',
-          key: 'title',
+          key: 'name',
           align: 'center'
         },
-        {
-          title: '套餐',
-          width: 198,
-          key: 'attrTitle',
-          align: 'center'
-        },
+        // {
+        //   title: '套餐',
+        //   width: 198,
+        //   key: 'attrTitle',
+        //   align: 'center'
+        // },
         {
           title: '数量',
-          key: 'count',
+          key: 'amount',
           width: 68,
           align: 'center'
         },
