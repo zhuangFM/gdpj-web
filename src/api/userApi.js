@@ -18,9 +18,13 @@ export const addAddress = (data) => {
 };
 
 // 获取收货地址
-export const getAddressList = () => {
-  return post({
-    url: '/u/address_list'
+export const getAddressList = (uid) => {
+  return http({
+    url: '/api/shopping-cart-module/get_address_list_by_uid',
+    method: 'get',
+    params: {
+      uid: uid
+    }
   });
 };
 
@@ -53,16 +57,36 @@ export const addShoppingCart = (data) => {
 };
 
 // 获取购物车信息
-export const getShoppingCart = () => {
-  return post({
-    url: '/u/cart_list'
+export const getShoppingCart = (data) => {
+  return http({
+    url: '/api/shopping-cart-module/get_shopping_cart_detail_info_list_by_uid',
+    method: 'get',
+    params: {
+      uid: data
+    }
   });
 };
 
 // 生成订单
 export const addOrder = (data) => {
   return post({
-    url: '/u/order_add',
+    url: '/api/transaction-module/save_transaction_order',
+    data: data
+  });
+};
+
+// 保存订单详情
+export const addOrderDetail = (data) => {
+  return post({
+    url: '/api/transaction-module/save_transaction_order_detail',
+    data: data
+  });
+};
+
+// 删除购物车对应商品
+export const deleteShoppingCartDetail = (data) => {
+  return post({
+    url: '/api/shopping-cart-module/delete_shopping_cart_detail_by_id',
     data: data
   });
 };

@@ -65,10 +65,10 @@ export default {
     };
   },
   created () {
-    this.loadShoppingCart();
+    this.loadShoppingCart(this.userInfo.data.id);
   },
   computed: {
-    ...mapState(['shoppingCart'])
+    ...mapState(['shoppingCart','userInfo'])
   },
   methods: {
     ...mapActions(['loadShoppingCart']),

@@ -8,7 +8,8 @@
         <Icon type="ios-lightbulb-outline" slot="icon"></Icon>
         <template slot="desc">请点击商品前的选择框，选择购物车中的商品，点击付款即可。</template>
       </Alert>
-      <Table border ref="selection" :columns="columns" :data="shoppingCart" size="large" @on-selection-change="select" no-data-text="您的购物车没有商品，请先添加商品到购物车再点击购买"></Table>
+      <Table border ref="selection" :columns="columns" :data="shoppingCart" size="large" @on-selection-change="select"
+             no-data-text="您的购物车没有商品，请先添加商品到购物车再点击购买"></Table>
       <div class="address-container">
         <h3>收货人信息</h3>
         <div class="address-box">
@@ -22,14 +23,14 @@
           </div>
           <Collapse>
             <Panel>
-                选择地址
-                <p slot="content">
-                  <RadioGroup vertical size="large" @on-change="changeAddress">
-                    <Radio :label="item.address_id" v-for="(item, index) in address" :key="index">
-                      <span>{{item.name}} {{item.province}} {{item.city}} {{item.address}} {{item.phone}} {{item.postalcode}}</span>
-                    </Radio>
-                  </RadioGroup>
-                </p>
+              选择地址
+              <p slot="content">
+                <RadioGroup vertical size="large" @on-change="changeAddress">
+                  <Radio :label="item.id" v-for="(item, index) in address" :key="index">
+                    <span>{{item.consignee}} {{item.province}} {{item.city}} {{item.address}} {{item.phone}} {{item.postcode}}</span>
+                  </Radio>
+                </RadioGroup>
+              </p>
             </Panel>
           </Collapse>
         </div>
@@ -44,7 +45,8 @@
       </div>
       <div class="pay-container">
         <div class="pay-box">
-          <p><span>提交订单应付总额：</span> <span class="money"><Icon type="social-yen"></Icon> {{totalPrice.toFixed(2)}}</span></p>
+          <p><span>提交订单应付总额：</span> <span class="money"><Icon type="social-yen"></Icon> {{totalPrice.toFixed(2)}}</span>
+          </p>
           <div class="pay-btn">
             <Button type="error" @click="pay" size="large">支付订单</Button>
           </div>
@@ -56,237 +58,285 @@
 </template>
 
 <script>
-import Sreach from '@/components/Sreach';
-import GoodsListNav from '@/components/nav/GoodsListNav';
-import Footer from '@/components/footer/Footer';
-import store from '@/vuex/store';
-import { mapState, mapActions } from 'vuex';
-export default {
-  name: 'Order',
-  created () {
-    this.loadAddress();
-  },
-  data () {
-    return {
-      goodsCheckList: [],
-      columns: [
-        {
-          type: 'selection',
-          width: 58,
-          align: 'center'
-        },
-        {
-          title: '图片',
-          key: 'imagePath',
-          width: 86,
-          render: (h, params) => {
-            return h('div', [
-              h('img', {
-                attrs: {
-                  src: params.row.imagePath.split(",")[0]
-                }
-              })
-            ]);
-          },
-          align: 'center'
-        },
-        {
-          title: '标题',
-          key: 'name',
-          align: 'center'
-        },
-        // {
-        //   title: '套餐',
-        //   width: 198,
-        //   key: 'attrTitle',
-        //   align: 'center'
-        // },
-        {
-          title: '数量',
-          key: 'amount',
-          width: 68,
-          align: 'center'
-        },
-        {
-          title: '价格',
-          width: 68,
-          key: 'price',
-          align: 'center',
-          render: function (h, params) {
-            return h('span', this.row.price.toFixed(2)); // 这里的this.row能够获取当前行的数据
-          }
-        }
-      ],
-      checkAddress: {
-        flag: false,
-        index: 999,
-        name: '未选择',
-        address: '请选择地址'
-      },
-      remarks: ''
-    };
-  },
-  computed: {
-    ...mapState(['address', 'shoppingCart']),
-    totalPrice () {
-      let price = 0;
-      this.goodsCheckList.forEach(item => {
-        price += item.price * item.count;
-      });
-      return price;
-    }
-  },
-  methods: {
-    ...mapActions(['loadAddress', 'addOrder']),
-    select (selection, row) {
-      this.goodsCheckList = selection;
-    },
-    changeAddress (data) {
-      const father = this;
-      this.address.forEach((item, index) => {
-        if (item.address_id === data) {
-          father.checkAddress.index = index;
-          father.checkAddress.flag = true;
-          father.checkAddress.name = item.name;
-          father.checkAddress.address = `${item.name} ${item.province} ${item.city} ${item.address} ${item.phone} ${item.postalcode}`;
-        }
-      });
-    },
-    pay () {
-      if (!this.checkAddress.flag) {
-        this.$Message.error('请选择地址');
-        return false;
-      }
+  import Sreach from '@/components/Sreach';
+  import GoodsListNav from '@/components/nav/GoodsListNav';
+  import Footer from '@/components/footer/Footer';
+  import store from '@/vuex/store';
+  import {mapState, mapActions} from 'vuex';
 
-      if (this.goodsCheckList.length <= 0) {
-        this.$Message.error('请选择货物');
-        return false;
-      }
-      console.log(this.remarks);
-      console.log(this.address[this.checkAddress.index]);
-      console.log(this.goodsCheckList);
-      const goodsList = [];
-      let cartId = [];
-      for (const item of this.goodsCheckList) {
-        const goods = {
-          attrId: item.attrId,
-          attrTitle: item.attrTitle,
-          count: item.count,
-          goodsCode: item.goodsCode,
-          goodsId: item.goodsId,
-          img: item.img,
-          merchantId: item.merchantId,
-          price: item.price,
-          goodsName: item.title
-        };
-        cartId.push(item.id);
-        goodsList.push(goods);
-      }
-      const data = {
-        cart: cartId,
-        order: {
-          orderId: '1',
-          name: this.checkAddress.name,
-          address: this.checkAddress.address,
-          addressId: this.address[this.checkAddress.index].address_id,
-          price: this.totalPrice,
-          orderDetail: goodsList
-        }
+  export default {
+    name: 'Order',
+    created() {
+      console.log("access the order page ");
+      console.log(this.userInfo);
+      this.loadAddress(this.userInfo.data.id);
+    },
+    data() {
+      return {
+        goodsCheckList: [],
+        columns: [
+          {
+            type: 'selection',
+            width: 58,
+            align: 'center'
+          },
+          {
+            title: '图片',
+            key: 'imagePath',
+            width: 150,
+            render: (h, params) => {
+              return h('div', [
+                h('img', {
+                  attrs: {
+                    src: 'static/images/' + params.row.foodstuffId + '/' + params.row.imagePath.split(",")[0],
+                    width: '45px',
+                  }
+                })
+              ]);
+            },
+            align: 'center'
+          },
+          {
+            title: '食品名称',
+            key: 'foodstuffName',
+            align: 'center'
+          },
+          // {
+          //   title: '套餐',
+          //   width: 198,
+          //   key: 'attrTitle',
+          //   align: 'center'
+          // },
+          {
+            title: '数量',
+            key: 'amount',
+            width: 68,
+            align: 'center'
+          },
+          {
+            title: '价格',
+            width: 68,
+            key: 'singlePrice',
+            align: 'center',
+            render: function (h, params) {
+              return h('span', this.row.singlePrice.toFixed(2)); // 这里的this.row能够获取当前行的数据
+            }
+          }
+        ],
+        checkAddress: {
+          flag: false,
+          index: 999,
+          name: '未选择',
+          address: '请选择地址'
+        },
+        remarks: ''
       };
-      this.addOrder(data).then(result => {
-        if (result) {
-          this.$router.push('/pay');
-        } else {
-          this.$Message.error('下单失败');
+    },
+    computed: {
+      ...mapState(['address', 'shoppingCart', 'userInfo']),
+      totalPrice() {
+        let price = 0;
+        this.goodsCheckList.forEach(item => {
+          price += item.singlePrice * item.amount;
+        });
+        return price;
+      }
+    },
+    methods: {
+      ...mapActions(['loadAddress', 'addOrder', 'addOrderDetail', 'deleteShoppingCartDetail']),
+      select(selection, row) {
+        this.goodsCheckList = selection;
+      },
+      changeAddress(data) {
+        const father = this;
+        this.address.forEach((item, index) => {
+          if (item.id === data) {
+            father.checkAddress.index = index;
+            father.checkAddress.flag = true;
+            father.checkAddress.name = item.consignee;
+            father.checkAddress.address = `${item.consignee} ${item.province} ${item.city} ${item.address} ${item.phone} ${item.postcode}`;
+          }
+        });
+      },
+      pay() {
+        if (!this.checkAddress.flag) {
+          this.$Message.error('请选择地址');
+          return false;
         }
-      });
-    }
-  },
-  mounted () {
-    setTimeout(() => {
-      this.$refs.selection.selectAll(true);
-    }, 500);
-  },
-  components: {
-    Sreach,
-    GoodsListNav,
-    Footer
-  },
-  store
-};
+
+        if (this.goodsCheckList.length <= 0) {
+          this.$Message.error('请选择货物');
+          return false;
+        }
+        console.log(this.remarks);
+        console.log(this.address[this.checkAddress.index]);
+        console.log(this.goodsCheckList);
+        const goodsList = [];
+        let cartId = [];
+        for (const item of this.goodsCheckList) {
+          const goods = {
+            foodstuffId: item.foodstuffId,
+            amount: item.amount,
+            shoppingCartDetailId: item.id,
+            // attrId: item.attrId,
+            // attrTitle: item.attrTitle,
+            // goodsCode: item.goodsCode,
+            // goodsId: item.goodsId,
+            // img: item.img,
+            // merchantId: item.merchantId,
+            // price: item.price,
+            // goodsName: item.title
+          };
+          //   cartId.push(item.id);
+          goodsList.push(goods);
+        }
+        // const data = {
+        //   cart: cartId,
+        //   order: {
+        //     orderId: '1',
+        //     name: this.checkAddress.name,
+        //     address: this.checkAddress.address,
+        //     addressId: this.address[this.checkAddress.index].address_id,
+        //     price: this.totalPrice,
+        //     orderDetail: goodsList
+        //   }
+        // };
+        const data = {
+          buyerId: this.userInfo.data.id,
+          totalMoney: this.totalPrice,
+          // detail:goodsList,
+        };
+        //生成订单
+        this.addOrder(data).then(result => {
+          for (const item of goodsList) {
+            item.transactionOrderId = result.data.id;
+          }
+          if (result.result) {
+            //添加订单详情
+            this.addOrderDetail(goodsList).then(ret => {
+              console.log(ret);
+              if (ret.result) {
+                //删除购物车对应商品
+                console.log("deleteShoppingCartDetail");
+                console.log(ret.scdIdArr);
+                this.deleteShoppingCartDetail(ret.scdIdArr).then(re => {
+                  if (re) {
+                    this.$router.push('/pay');
+                  }
+                  else {
+                    this.$Message.error('下单失败');
+                  }
+                });
+              }
+              else {
+                this.$Message.error('下单失败');
+              }
+            });
+          } else {
+            this.$Message.error('下单失败');
+          }
+        });
+      }
+    },
+    mounted() {
+      setTimeout(() => {
+        this.$refs.selection.selectAll(true);
+      }, 500);
+    },
+    components: {
+      Sreach,
+      GoodsListNav,
+      Footer
+    },
+    store
+  };
 </script>
 
 <style scoped>
-.goods-list-container {
-  margin: 15px auto;
-  width: 80%;
-}
-.tips-box {
-  margin-bottom: 15px;
-}
-.address-container {
-  margin-top: 15px;
-}
-.address-box {
-  margin-top: 15px;
-  padding: 15px;
-  border: 1px #ccc dotted;
-}
-.address-check {
-  margin: 15px 0px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-}
-.address-check-name {
-  width: 120px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  background-color: #ccc;
-}
-.address-check-name span {
-  width: 120px;
-  height: 36px;
-  font-size: 14px;
-  line-height: 36px;
-  text-align: center;
-  color: #fff;
-  background-color: #f90013;
-}
-.address-detail {
-  padding-left: 15px;
-  font-size: 14px;
-  color: #999999;
-}
-.remarks-container {
-  margin: 15px 0px;
-}
-.remarks-input {
-  margin-top: 15px;
-}
-.invoices-container p{
-  font-size: 12px;
-  line-height: 30px;
-  color: #999;
-}
-.pay-container {
-  margin: 15px;
-  display: flex;
-  justify-content: flex-end;
-}
-.pay-box {
-  font-size: 18px;
-  font-weight: bolder;
-  color: #495060;
-}
-.money {
-  font-size: 26px;
-  color: #f90013;
-}
-.pay-btn {
-  margin: 15px 0px;
-  display: flex;
-  justify-content: flex-end;
-}
+  .goods-list-container {
+    margin: 15px auto;
+    width: 80%;
+  }
+
+  .tips-box {
+    margin-bottom: 15px;
+  }
+
+  .address-container {
+    margin-top: 15px;
+  }
+
+  .address-box {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px #ccc dotted;
+  }
+
+  .address-check {
+    margin: 15px 0px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+  }
+
+  .address-check-name {
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: #ccc;
+  }
+
+  .address-check-name span {
+    width: 120px;
+    height: 36px;
+    font-size: 14px;
+    line-height: 36px;
+    text-align: center;
+    color: #fff;
+    background-color: #f90013;
+  }
+
+  .address-detail {
+    padding-left: 15px;
+    font-size: 14px;
+    color: #999999;
+  }
+
+  .remarks-container {
+    margin: 15px 0px;
+  }
+
+  .remarks-input {
+    margin-top: 15px;
+  }
+
+  .invoices-container p {
+    font-size: 12px;
+    line-height: 30px;
+    color: #999;
+  }
+
+  .pay-container {
+    margin: 15px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .pay-box {
+    font-size: 18px;
+    font-weight: bolder;
+    color: #495060;
+  }
+
+  .money {
+    font-size: 26px;
+    color: #f90013;
+  }
+
+  .pay-btn {
+    margin: 15px 0px;
+    display: flex;
+    justify-content: flex-end;
+  }
 </style>

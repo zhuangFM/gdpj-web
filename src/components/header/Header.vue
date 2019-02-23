@@ -48,25 +48,25 @@
               <div class="shopping-cart-list" v-show="shoppingCart.length > 0">
                 <div class="shopping-cart-box" v-for="(item,index) in shoppingCart" :key="index">
                   <div class="shopping-cart-img">
-                    <img :src="item.img">
+                    <img :src="'static/images/'+item.foodstuffId+'/'+item.imagePath.split(',')[0]">
                   </div>
                   <div class="shopping-cart-info">
                     <div class="shopping-cart-title">
-                      <p>{{item.title.substring(0, 18)}}...</p>
+                      <p>{{item.foodstuffName.substring(0, 18)}}...</p>
                     </div>
                     <div class="shopping-cart-detail">
                       <p>
-                        套餐:
-                        <span class="shopping-cart-text">
-                          {{item.attrTitle.substring(0, 5)}}
-                        </span>
+                        <!--套餐:-->
+                        <!--<span class="shopping-cart-text">-->
+                          <!--{{item.attrTitle.substring(0, 5)}}-->
+                        <!--</span>-->
                         数量:
                         <span class="shopping-cart-text">
-                          {{item.count}}
+                          {{item.amount}}
                         </span>
                         价钱:
                         <span class="shopping-cart-text">
-                          {{item.price.toFixed(2)}}
+                          {{item.singlePrice.toFixed(2)}}
                         </span>
                       </p>
                     </div>
@@ -102,7 +102,7 @@ export default {
         this.FLASH_USER_INFO();
       }
     });
-    this.loadShoppingCart();
+    this.loadShoppingCart(this.userInfo.data.id);
   },
   data () {
     return {

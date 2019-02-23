@@ -140,7 +140,7 @@ export default {
     this.loadCarouselItems();
     this.loadComputer();
     this.loadEat();
-    this.loadShoppingCart();
+    this.loadShoppingCart(this.userInfo.data.id);
   },
   mounted () {
     const father = this;
@@ -158,7 +158,7 @@ export default {
     ...mapMutations(['REDUCE_SECKILLS_TIME'])
   },
   computed: {
-    ...mapState([ 'seckills', 'computer', 'eat' ]),
+    ...mapState([ 'seckills', 'computer', 'eat','userInfo' ]),
     ...mapGetters([ 'seckillsHours', 'seckillsMinutes', 'seckillsSeconds' ])
   },
   components: {

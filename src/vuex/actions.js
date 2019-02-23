@@ -1,11 +1,11 @@
 import * as baseApi from '@/api/baseApi';
 import * as userApi from '@/api/userApi';
 // 判断手机是否存在
-export const isExist = ({ commit }, data) => {
+export const isExist = ({commit}, data) => {
   return new Promise((resolve, reject) => {
     baseApi.isExist(data).then(res => {
       const data = res.data;
-      const result = { isExist: data.isExist };
+      const result = {isExist: data.isExist};
       if (!data.isExist) {
         const checkNum = Math.floor(Math.random() * 9000 + 1000);
         commit('SET_CHECK_NUM', checkNum);
@@ -17,7 +17,7 @@ export const isExist = ({ commit }, data) => {
 };
 
 // 注册
-export const signUp = ({ commit }, data) => {
+export const signUp = ({commit}, data) => {
   return new Promise((resolve, reject) => {
     baseApi.signUp(data).then(res => {
       if (res.data.code === 1) {
@@ -30,7 +30,7 @@ export const signUp = ({ commit }, data) => {
 };
 
 // 登陆
-export const login = ({ commit }, data) => {
+export const login = ({commit}, data) => {
   return new Promise((resolve, reject) => {
     baseApi.login(data).then(res => {
       const data = res.data;
@@ -65,7 +65,7 @@ export const isExp = () => {
 };
 
 // 获取秒杀数据
-export const loadSeckillsInfo = ({ commit }) => {
+export const loadSeckillsInfo = ({commit}) => {
   return new Promise((resolve, reject) => {
     const data = [
       {
@@ -115,7 +115,7 @@ export const loadSeckillsInfo = ({ commit }) => {
 };
 
 // 获取轮播(营销)图片
-export const loadCarouselItems = ({ commit }) => {
+export const loadCarouselItems = ({commit}) => {
   return new Promise((resolve, reject) => {
     const data = {
       carouselItems: [
@@ -135,11 +135,11 @@ export const loadCarouselItems = ({ commit }) => {
 };
 
 // 加载电脑专栏数据
-export const loadComputer = ({ commit }) => {
+export const loadComputer = ({commit}) => {
   return new Promise((resolve, reject) => {
     const computer = {
       title: '电脑数码',
-      link: [ '电脑馆', '游戏极品', '装机大师', '职场焕新', '女神频道', '虚拟现实', '二合一平板', '电子教育', '万物周刊' ],
+      link: ['电脑馆', '游戏极品', '装机大师', '职场焕新', '女神频道', '虚拟现实', '二合一平板', '电子教育', '万物周刊'],
       detail: [
         {
           bigImg: 'static/img/index/computer/item-computer-1.jpg',
@@ -208,11 +208,11 @@ export const loadComputer = ({ commit }) => {
 };
 
 // 加载爱吃专栏数据
-export const loadEat = ({ commit }) => {
+export const loadEat = ({commit}) => {
   return new Promise((resolve, reject) => {
     const eat = {
       title: '爱吃',
-      link: [ '休闲零食', '坚果', '牛奶', '饮料冲调', '食用油', '大米', '白酒', '红酒', '烧烤食材', '牛排', '樱桃' ],
+      link: ['休闲零食', '坚果', '牛奶', '饮料冲调', '食用油', '大米', '白酒', '红酒', '烧烤食材', '牛排', '樱桃'],
       detail: [
         {
           bigImg: 'static/img/index/eat/item-eat-1-1.jpg',
@@ -281,7 +281,7 @@ export const loadEat = ({ commit }) => {
 };
 
 // 请求获得商品详细信息
-export const loadGoodsInfo = ({ commit }, data) => {
+export const loadGoodsInfo = ({commit}, data) => {
   commit('SET_LOAD_STATUS', true);
   return new Promise((resolve, reject) => {
     baseApi.getOneGoods(data).then(res => {
@@ -293,9 +293,9 @@ export const loadGoodsInfo = ({ commit }, data) => {
 };
 
 // 添加购物车
-export const addShoppingCart = ({ commit }, data) => {
+export const addShoppingCart = ({commit}, data) => {
   const item = {
-    uid:data.uid,
+    uid: data.uid,
     foodstuffId: data.goods_id,
     merchantId: data.merchant_id,
     // attrId: data.package.id,
@@ -319,7 +319,7 @@ export const addShoppingCart = ({ commit }, data) => {
 };
 
 // 获取用户推荐
-export const loadRecommend = ({ commit }) => {
+export const loadRecommend = ({commit}) => {
   return new Promise((resolve, reject) => {
     const data = [
       [
@@ -372,18 +372,19 @@ export const loadRecommend = ({ commit }) => {
 };
 
 // 加载收货地址
-export const loadAddress = ({ commit }) => {
+export const loadAddress = ({commit}, data) => {
   return new Promise((resolve, reject) => {
-    userApi.getAddressList().then(res => {
-      if (res.data.rcode === 0) {
-        commit('SET_USER_ADDRESS', res.data.result.data);
+    console.log("get user address where uid is " + data);
+    userApi.getAddressList(data).then(res => {
+      if (res.data.code === 1) {
+        commit('SET_USER_ADDRESS', res.data.addressList);
       }
     });
   });
 };
 
 // 删除收货地址
-export const delAddress = ({ commit }, data) => {
+export const delAddress = ({commit}, data) => {
   return new Promise((resolve, reject) => {
     userApi.delAddress(data).then(res => {
       if (res.data.rcode === 0) {
@@ -396,7 +397,7 @@ export const delAddress = ({ commit }, data) => {
 };
 
 // 修改收货地址
-export const editAddress = ({ commit }, data) => {
+export const editAddress = ({commit}, data) => {
   return new Promise((resolve, reject) => {
     userApi.editAddress(data).then(res => {
       if (res.data.rcode === 0) {
@@ -409,17 +410,17 @@ export const editAddress = ({ commit }, data) => {
 };
 
 // 加载购物车
-export const loadShoppingCart = ({ commit }) => {
+export const loadShoppingCart = ({commit}, data) => {
   return new Promise((resolve, reject) => {
-    userApi.getShoppingCart().then(res => {
+    userApi.getShoppingCart(data).then(res => {
       console.log(res.data);
-      commit('SET_SHOPPING_CART', res.data.result.data);
+      commit('SET_SHOPPING_CART', res.data.list);
     });
   });
 };
 
 // 添加收货地址
-export const addAddress = ({ commit }, data) => {
+export const addAddress = ({commit}, data) => {
   return new Promise((resolve, reject) => {
     userApi.addAddress(data).then(res => {
       if (res.data.rcode === 0) {
@@ -432,11 +433,11 @@ export const addAddress = ({ commit }, data) => {
 };
 
 // 按标签获取商品
-export const getGoodsByName = ({ commit }, data) => {
+export const getGoodsByName = ({commit}, data) => {
   commit('SET_LOAD_STATUS', true);
   console.log(data);
   return new Promise((resolve, reject) => {
-    baseApi.goodsList(data.foodstuffName,data.orderBy).then(res => {
+    baseApi.goodsList(data.foodstuffName, data.orderBy).then(res => {
       console.log(res);
       commit('SET_GOODS_INFO_BY_NAME', res.data.foodstuffList.list);
       commit('SET_LOAD_STATUS', false);
@@ -445,7 +446,7 @@ export const getGoodsByName = ({ commit }, data) => {
 };
 
 // 获取商家的商品
-export const getGoodsByMerchantId = ({ commit }, data) => {
+export const getGoodsByMerchantId = ({commit}, data) => {
   commit('SET_LOAD_STATUS', true);
   return new Promise((resolve, reject) => {
     baseApi.goodsListByOrigin(data).then(res => {
@@ -457,12 +458,38 @@ export const getGoodsByMerchantId = ({ commit }, data) => {
 };
 
 // 生成订单
-export const addOrder = ({ commit }, data) => {
+export const addOrder = ({commit}, data) => {
   return new Promise((resolve, reject) => {
     userApi.addOrder(data).then(res => {
-      if (res.data.rcode === 0) {
+      if (res.data.code === 1) {
+        resolve({'result': true, 'data': res.data.result});
+      } else {
+        resolve({'result': false});
+      }
+    });
+  });
+};
+//保存订单详情
+export const addOrderDetail = ({commit}, data) => {
+  return new Promise((resolve, reject) => {
+    userApi.addOrderDetail(data).then(res => {
+      console.log(res);
+      if (res.data.code === 1) {
+        resolve({'result': true, 'scdIdArr':res.data.shoppingCartDetailIdList});
+        commit('REMOVE_SHOPPING_CART', res.data.shoppingCartDetailIdList);
+      } else {
+        resolve({'result': false});
+      }
+    });
+  });
+};
+
+//删除购物车对应商品
+export const deleteShoppingCartDetail = ({commit}, data) => {
+  return new Promise((resolve, reject) => {
+    userApi.deleteShoppingCartDetail(data).then(res => {
+      if (res.data.code === 1) {
         resolve(true);
-        commit('REMOVE_SHOPPING_CART', data.cart);
       } else {
         resolve(false);
       }
@@ -471,7 +498,7 @@ export const addOrder = ({ commit }, data) => {
 };
 
 // 获取订单
-export const getOrder = ({ commit }) => {
+export const getOrder = ({commit}) => {
   return new Promise((resolve, reject) => {
     userApi.getOrder().then(res => {
       if (res.data.rcode === 0) {
