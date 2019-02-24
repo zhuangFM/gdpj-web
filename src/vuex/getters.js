@@ -49,7 +49,7 @@ export const merchantItem = state => {
 // 商家侧边栏
 export const asItem = state => {
   if (state.goodsInfoByName.length <= 0) return [];
-  const asAll = state.goodsInfoByName.sort(compare('inventory'));
+  const asAll = state.goodsInfoByName.sort(compare(state.orderBy));
   const asItem = [];
   for (let i = 0; i < asAll.length && i < 6; i++) {
     const temp = {
@@ -89,9 +89,9 @@ export const getGoodsDetailBase = state => {
 export const getGoodsDetail = state => {
   const param = [];
   const desc = state.goodsDetail.desc ? state.goodsDetail.desc.split(',') : [];
-  for (const item of state.goodsDetail.desc.split(',') || []) {
+  for (const item of state.goodsDetail.unit.split(',') || []) {
     param.push({
-      title: item.substring(0, 15),
+      title:'单位',
       content: item.substring(0, 15)
     });
   }

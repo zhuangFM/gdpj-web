@@ -22,13 +22,14 @@ export default {
         },
         {
           title: '图片',
-          key: 'img',
-          width: 86,
+          key: 'imagePath',
+          width: 150,
           render: (h, params) => {
             return h('div', [
               h('img', {
                 attrs: {
-                  src: params.row.img
+                  src: 'static/images/' + params.row.foodstuffId + '/' + params.row.imagePath.split(",")[0],
+                  width: '45px',
                 }
               })
             ]);
@@ -36,29 +37,29 @@ export default {
           align: 'center'
         },
         {
-          title: '标题',
-          key: 'title',
+          title: '食品名称',
+          key: 'foodstuffName',
           align: 'center'
         },
-        {
-          title: '套餐',
-          width: 198,
-          key: 'attrTitle',
-          align: 'center'
-        },
+        // {
+        //   title: '套餐',
+        //   width: 198,
+        //   key: 'attrTitle',
+        //   align: 'center'
+        // },
         {
           title: '数量',
-          key: 'count',
+          key: 'amount',
           width: 68,
           align: 'center'
         },
         {
           title: '价格',
           width: 68,
-          key: 'price',
+          key: 'singlePrice',
           align: 'center',
           render: function (h, params) {
-            return h('span', this.row.price.toFixed(2)); // 这里的this.row能够获取当前行的数据
+            return h('span', this.row.singlePrice.toFixed(2)); // 这里的this.row能够获取当前行的数据
           }
         }
       ]

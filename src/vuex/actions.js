@@ -69,33 +69,33 @@ export const loadSeckillsInfo = ({commit}) => {
   return new Promise((resolve, reject) => {
     const data = [
       {
-        intro: '【赠小风扇】维他 柠檬茶250ml*32盒 礼品装 整箱',
-        img: 'static/img/index/seckill/seckill-item1.jpg',
-        price: 71.9,
-        realPrice: 89.6
+        intro: '柔风黄油曲奇',
+        img: 'static/img/index/seckill/1.jpg',
+        price: 98.0,
+        realPrice: 121.0
       },
       {
-        intro: 'Kindle Paperwhite 全新升级版6英寸护眼非反光电子墨水',
-        img: 'static/img/index/seckill/seckill-item2.jpg',
-        price: 989.0,
-        realPrice: 1299.0
+        intro: '绿茶蛋黄酥 50克*4枚',
+        img: 'static/img/index/seckill/2.jpg',
+        price: 28.0,
+        realPrice: 38.0
       },
       {
-        intro: '粮悦 大吃兄糯米锅巴 安徽特产锅巴糯米原味400g*2盒',
-        img: 'static/img/index/seckill/seckill-item3.jpg',
-        price: 21.8,
-        realPrice: 49.0
+        intro: '奶油鸡蛋卷 150克（5袋入）',
+        img: 'static/img/index/seckill/3.jpg',
+        price: 17.1,
+        realPrice: 19.8
       },
       {
-        intro: '【京东超市】清风（APP）抽纸 原木纯品金装系列 3层',
-        img: 'static/img/index/seckill/seckill-item4.jpg',
-        price: 49.9,
-        realPrice: 59.0
+        intro: '炭火烤肠 150克',
+        img: 'static/img/index/seckill/4.jpg',
+        price:18.0,
+        realPrice: 26.0
       },
       {
-        intro: 'NIKE耐克 男子休闲鞋 AIR MAX 90 ESSENTIAL 气垫',
-        img: 'static/img/index/seckill/seckill-item5.jpg',
-        price: 559.9,
+        intro: '半甜型黄酒 720毫升',
+        img: 'static/img/index/seckill/5.jpg',
+        price: 589.9,
         realPrice: 759.9
       }
     ];
@@ -138,8 +138,8 @@ export const loadCarouselItems = ({commit}) => {
 export const loadComputer = ({commit}) => {
   return new Promise((resolve, reject) => {
     const computer = {
-      title: '电脑数码',
-      link: ['电脑馆', '游戏极品', '装机大师', '职场焕新', '女神频道', '虚拟现实', '二合一平板', '电子教育', '万物周刊'],
+      title: '全球工厂店',
+      link: ['考拉工厂店', '日本美食', '美国美食', '意大利美食', '东南亚美食'],
       detail: [
         {
           bigImg: 'static/img/index/computer/item-computer-1.jpg',
@@ -325,45 +325,45 @@ export const loadRecommend = ({commit}) => {
       [
         {
           img: 'static/img/otherBuy/1.jpg',
-          intro: 'iPhone7/6s/8钢化膜苹果7Plus全屏全覆盖3D抗蓝',
-          price: 29.00
+          intro: '绿茶蛋黄酥 50克*4枚',
+          price: 28.00
         },
         {
           img: 'static/img/otherBuy/2.jpg',
-          intro: '苹果数据线 苹果iPhoneX/6s/7plus/8充电线',
-          price: 36.00
+          intro: '黄山烧饼 21克*8枚',
+          price: 12.80
         },
         {
           img: 'static/img/otherBuy/3.jpg',
-          intro: '苹果8/7/6/6s钢化膜 iphone8/7/6s/6钢化玻璃',
-          price: 19.00
+          intro: '绿豆糕 240克（12枚入）',
+          price: 26.00
         },
         {
           img: 'static/img/otherBuy/4.jpg',
-          intro: 'iPhone6s/7钢化膜苹果8 Plus手机膜抗蓝光非全屏',
-          price: 28.00
+          intro: '芝心寿司 90克',
+          price: 15.00
         }
       ],
       [
         {
           img: 'static/img/otherBuy/5.jpg',
-          intro: '苹果6s手机壳iPhone6s Plus保护壳防摔全',
-          price: 28.00
+          intro: '和风鱿鱼卷 90克',
+          price: 7.90
         },
         {
           img: 'static/img/otherBuy/6.jpg',
-          intro: 'iPhone7/8手机壳手机套防摔磨砂保护壳星空黑☆全包保护',
-          price: 30.00
+          intro: '黑芝麻酥 158克',
+          price: 14.90
         },
         {
           img: 'static/img/otherBuy/7.jpg',
-          intro: '数据线 适用于苹果iPhone 6s/6plus/7plus/8/X',
-          price: 18.00
+          intro: '手工巧克力',
+          price: 288.00
         },
         {
           img: 'static/img/otherBuy/8.jpg',
-          intro: 'iPhone8/7/6S/6钢化膜 苹果8/7/6s/6玻璃膜 手机高',
-          price: 15.00
+          intro: '猪肉脯 150克',
+          price: 26.00
         }
       ]
     ];
@@ -387,7 +387,7 @@ export const loadAddress = ({commit}, data) => {
 export const delAddress = ({commit}, data) => {
   return new Promise((resolve, reject) => {
     userApi.delAddress(data).then(res => {
-      if (res.data.rcode === 0) {
+      if (res.data.code === 1) {
         resolve(true);
       } else {
         resolve(false);
@@ -400,7 +400,7 @@ export const delAddress = ({commit}, data) => {
 export const editAddress = ({commit}, data) => {
   return new Promise((resolve, reject) => {
     userApi.editAddress(data).then(res => {
-      if (res.data.rcode === 0) {
+      if (res.data.code === 1) {
         resolve(true);
       } else {
         resolve(false);
@@ -423,7 +423,7 @@ export const loadShoppingCart = ({commit}, data) => {
 export const addAddress = ({commit}, data) => {
   return new Promise((resolve, reject) => {
     userApi.addAddress(data).then(res => {
-      if (res.data.rcode === 0) {
+      if (res.data.code === 1) {
         resolve(true);
       } else {
         resolve(false);
@@ -498,11 +498,11 @@ export const deleteShoppingCartDetail = ({commit}, data) => {
 };
 
 // 获取订单
-export const getOrder = ({commit}) => {
+export const getOrder = ({commit},data) => {
   return new Promise((resolve, reject) => {
-    userApi.getOrder().then(res => {
-      if (res.data.rcode === 0) {
-        commit('SET_USER_ORDER_INFO', res.data.result.data);
+    userApi.getOrder(data).then(res => {
+      if (res.data.code === 1) {
+        commit('SET_USER_ORDER_INFO', res.data.transactionOrderInfoList);
         console.log(res.data);
       }
     });

@@ -2,19 +2,19 @@
   <div>
     <div class="address-box" v-for="(item, index) in getAddress" :key="index">
       <div class="address-header">
-        <span>{{item.name}}</span>
+        <span>{{item.consignee}}</span>
         <div class="address-action">
           <span @click="edit(index)"><Icon type="edit"></Icon> 修改</span>
           <span @click="del(index)"><Icon type="trash-a"></Icon> 删除</span>
         </div>
       </div>
       <div class="address-content">
-        <p><span class="address-content-title"> 收 货 人 :</span> {{item.name}}</p>
-        <p><span class="address-content-title">收货地区:</span> {{item.province}} {{item.city}} {{item.area}}
+        <p><span class="address-content-title"> 收 货 人 :</span> {{item.consignee}}</p>
+        <p><span class="address-content-title">收货地区:</span> {{item.province}} {{item.city}}
         </p>
         <p><span class="address-content-title">手机号码:</span> {{item.phone}}</p>
         <p><span class="address-content-title">收货地址:</span> {{item.address}}</p>
-        <p><span class="address-content-title">邮政编码:</span> {{item.postalcode}}</p>
+        <p><span class="address-content-title">邮政编码:</span> {{item.postcode}}</p>
       </div>
     </div>
     <Modal v-model="modal" width="530">
@@ -24,11 +24,11 @@
         </p>
         <div>
             <Form :model="formData" label-position="left" :label-width="100" :rules="ruleInline">
-              <FormItem label="收件人" prop="name">
-                <i-input v-model="formData.name" size="large"></i-input>
+              <FormItem label="收件人" prop="consignee">
+                <i-input v-model="formData.consignee" size="large"></i-input>
               </FormItem>
               <FormItem label="收件地区" prop="address">
-                <Distpicker :province="formData.province" :city="formData.city" :area="formData.area" @province="getProvince" @city="getCity" @area="getArea"></Distpicker>
+                <Distpicker :province="formData.province" :city="formData.city"  @province="getProvince" @city="getCity" ></Distpicker>
               </FormItem>
               <FormItem label="收件地址" prop="address">
                 <i-input v-model="formData.address" size="large"></i-input>
@@ -36,8 +36,8 @@
               <FormItem label="手机号码" prop="phone">
                 <i-input v-model="formData.phone" size="large"></i-input>
               </FormItem>
-              <FormItem label="邮政编码" prop="postalcode">
-                <i-input v-model="formData.postalcode" size="large"></i-input>
+              <FormItem label="邮政编码" prop="postcode">
+                <i-input v-model="formData.postcode" size="large"></i-input>
               </FormItem>
             </Form>
         </div>
@@ -50,7 +50,7 @@
 
 <script>
 import store from '@/vuex/store';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters,mapState } from 'vuex';
 import Distpicker from 'v-distpicker';
 export default {
   name: 'MyAddress',
@@ -58,23 +58,22 @@ export default {
     return {
       modal: false,
       formData: {
-        address_id: '',
-        name: '',
+        id: '',
+        consignee: '',
         address: '',
         phone: '',
-        postalcode: '',
+        postcode: '',
         province: '广东省',
         city: '广州市',
-        area: '天河区'
       },
       ruleInline: {
-        name: [
+        consignee: [
           { required: true, message: '请输入姓名', trigger: 'blur' }
         ],
         address: [
           { required: true, message: '请输入地址', trigger: 'blur' }
         ],
-        postalcode: [
+        postcode: [
           { required: true, message: '请输入邮政编码', trigger: 'blur' }
         ],
         phone: [
@@ -85,10 +84,11 @@ export default {
     };
   },
   created () {
-    this.loadAddress();
+    this.loadAddress(this.userInfo.data.id);
   },
   computed: {
-    ...mapGetters(['getAddress'])
+    ...mapGetters(['getAddress']),
+    ...mapState(['userInfo']),
   },
   methods: {
     ...mapActions(['loadAddress', 'delAddress', 'editAddress']),
@@ -98,25 +98,21 @@ export default {
     getCity (data) {
       this.formData.city = data.value;
     },
-    getArea (data) {
-      this.formData.area = data.value;
-    },
     edit (index) {
       this.modal = true;
-      this.formData.address_id = this.getAddress[index].address_id;
+      this.formData.id = this.getAddress[index].id;
       this.formData.province = this.getAddress[index].province;
       this.formData.city = this.getAddress[index].city;
-      this.formData.area = this.getAddress[index].area;
       this.formData.address = this.getAddress[index].address;
-      this.formData.name = this.getAddress[index].name;
+      this.formData.consignee = this.getAddress[index].consignee;
       this.formData.phone = this.getAddress[index].phone;
-      this.formData.postalcode = this.getAddress[index].postalcode;
+      this.formData.postcode = this.getAddress[index].postcode;
     },
     editAction () {
       this.editAddress(this.formData).then(result => {
         if (result) {
           this.$Message.success(`修改成功`);
-          this.loadAddress();
+          this.loadAddress(this.userInfo.data.id);
         } else {
           this.$Message.error('修改失败');
         }
@@ -129,10 +125,10 @@ export default {
         content: '你确定删除这个收货地址',
         onOk: () => {
           console.log(this.getAddress[index]);
-          this.delAddress(this.getAddress[index]).then(result => {
+          this.delAddress(this.getAddress[index].id).then(result => {
             if (result) {
               this.$Message.success(`删除成功`);
-              this.loadAddress();
+              this.loadAddress(this.userInfo.data.id);
             } else {
               this.$Message.error('删除失败');
             }

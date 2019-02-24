@@ -63,10 +63,10 @@
             <span class="nav-side-item">调味酱菜</span> /
             <span class="nav-side-item">饼干糕点</span>
           </li>
-          <li @mouseenter="showDetail(13)" @mouseleave="hideDetail()">
-            <span class="nav-side-item">调味酱菜</span> /
-            <span class="nav-side-item">果鲜肉蛋</span>
-          </li>
+          <!--<li @mouseenter="showDetail(13)" @mouseleave="hideDetail()">-->
+            <!--<span class="nav-side-item">调味酱菜</span> /-->
+            <!--<span class="nav-side-item">果鲜肉蛋</span>-->
+          <!--</li>-->
         </ul>
       </div>
       <div class="nav-content">
@@ -74,7 +74,7 @@
         <div>
           <Carousel autoplay loop>
             <CarouselItem v-for="(item, index) in marketing.CarouselItems" :key="index">
-              <router-link :to="{path: '/goodsList', query: { searchData: '电脑'}}">
+              <router-link :to="{path: '/goodsList', query: { searchData: '网易'}}">
                 <img :src="item">
               </router-link>
             </CarouselItem>
@@ -82,7 +82,7 @@
         </div>
         <div class="nav-show">
           <div class="nav-show-img" v-for="(item, index) in marketing.activity" :key="index">
-            <router-link :to="{path: '/goodsList', query: { searchData: '电脑'}}">
+            <router-link :to="{path: '/goodsList', query: { searchData: '网易'}}">
               <img :src="item">
             </router-link>
           </div>
@@ -165,7 +165,7 @@
           '优惠券',
           '闪购',
           '特价',
-          '服装城',
+          '工厂店',
           '便捷超市',
           '生鲜',
           '全球购',
@@ -410,7 +410,7 @@
   /*大的导航信息，包含导航，幻灯片等*/
   .nav-body {
     width: 1020px;
-    height: 485px;
+    height: 455px;
     margin: 0px auto;
   }
 

@@ -53,7 +53,7 @@
             </ul>
           </div>
           <div class="goods-list">
-            <div class="goods-show-info" v-for="(item, index) in goodsInfoByNameFilter" :key="index">
+            <div class="goods-show-info" v-for="(item, index) in goodsInfoByNameFilter" :key="item.goodsId">
               <div class="goods-show-img">
                 <router-link :to="{ path: '/goodsDetail', query: { goodsId: item.goodsId, merchantId: item.merchantId } }">
                   <img :src="'static/images/'+item.goodsId+'/'+item.goodsImgs"/>

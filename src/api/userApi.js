@@ -10,10 +10,8 @@ const post = (data) => {
 // 添加收货地址
 export const addAddress = (data) => {
   return post({
-    url: '/u/address_add',
-    data: {
-      address: data
-    }
+    url: '/api/shopping-cart-module/save_address',
+    data: data
   });
 };
 
@@ -30,10 +28,11 @@ export const getAddressList = (uid) => {
 
 // 删除地址
 export const delAddress = (data) => {
-  return post({
-    url: '/u/address_del',
-    data: {
-      address: data
+  return http({
+    url: '/api/shopping-cart-module/delete_address_by_id',
+    method: 'get',
+    params: {
+      id: data
     }
   });
 };
@@ -41,10 +40,8 @@ export const delAddress = (data) => {
 // 修改地址
 export const editAddress = (data) => {
   return post({
-    url: '/u/address_edit',
-    data: {
-      address: data
-    }
+    url: '/api/shopping-cart-module/save_address',
+    data: data
   });
 };
 
@@ -92,8 +89,12 @@ export const deleteShoppingCartDetail = (data) => {
 };
 
 // 获取订单
-export const getOrder = () => {
-  return post({
-    url: '/u/order_list'
+export const getOrder = (data) => {
+  return http({
+    url: '/api/transaction-module/get_transaction_order_info_list_by_buyer_id',
+    method: 'get',
+    params: {
+      buyerId: data
+    }
   });
 };

@@ -42,45 +42,45 @@
         </div>
       </div>
       <!-- 电脑专场 -->
-      <div class="item-class">
-        <div class="item-class-head">
-          <span class="item-class-title">{{computer.title}}</span>
-          <ul>
-            <li v-for="(item, index) in computer.link" :key="index">
-              <router-link :to="{path: '/goodsList', query: { searchData: item }}">{{item}}</router-link>
-            </li>
-          </ul>
-        </div>
-        <div class="item-class-content" v-for="(item, index) in computer.detail" :key="index">
-          <div class="item-content-top">
-            <div class="item-big-img">
-              <router-link :to="{path: '/goodsList', query: { searchData: '电脑' }}">
-                <img :src="item.bigImg" alt="">
-              </router-link>
-            </div>
-            <div class="item-four-img">
-              <div class="item-four-detail" v-for="(subItem, index) in item.itemFour" :key="index">
-                <div class="item-four-detail-text">
-                  <p class="pt_bi_tit">{{subItem.title}}</p>
-                  <p class="pt_bi_promo">{{subItem.intro}}</p>
-                </div>
-                <div class="item-four-detail-img">
-                  <router-link :to="{path: '/goodsList', query: { searchData: subItem.title }}">
-                    <img :src="subItem.img" alt="">
-                  </router-link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="item-content-bottom">
-            <div class="item-content-bottom-img" v-for="(subImg, index) in item.itemContent" :key="index">
-              <router-link :to="{path: '/goodsList', query: { searchData: '电脑' }}">
-                <img :src="subImg">
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!--<div class="item-class">-->
+        <!--<div class="item-class-head">-->
+          <!--<span class="item-class-title">{{computer.title}}</span>-->
+          <!--<ul>-->
+            <!--<li v-for="(item, index) in computer.link" :key="index">-->
+              <!--<router-link :to="{path: '/goodsList', query: { searchData: item }}">{{item}}</router-link>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</div>-->
+        <!--<div class="item-class-content" v-for="(item, index) in computer.detail" :key="index">-->
+          <!--<div class="item-content-top">-->
+            <!--<div class="item-big-img">-->
+              <!--<router-link :to="{path: '/goodsList', query: { searchData: '电脑' }}">-->
+                <!--<img :src="item.bigImg" alt="">-->
+              <!--</router-link>-->
+            <!--</div>-->
+            <!--<div class="item-four-img">-->
+              <!--<div class="item-four-detail" v-for="(subItem, index) in item.itemFour" :key="index">-->
+                <!--<div class="item-four-detail-text">-->
+                  <!--<p class="pt_bi_tit">{{subItem.title}}</p>-->
+                  <!--<p class="pt_bi_promo">{{subItem.intro}}</p>-->
+                <!--</div>-->
+                <!--<div class="item-four-detail-img">-->
+                  <!--<router-link :to="{path: '/goodsList', query: { searchData: subItem.title }}">-->
+                    <!--<img :src="subItem.img" alt="">-->
+                  <!--</router-link>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="item-content-bottom">-->
+            <!--<div class="item-content-bottom-img" v-for="(subImg, index) in item.itemContent" :key="index">-->
+              <!--<router-link :to="{path: '/goodsList', query: { searchData: '电脑' }}">-->
+                <!--<img :src="subImg">-->
+              <!--</router-link>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
       <!-- 爱吃专场 -->
       <div class="item-class">
         <div class="item-class-head item-class-eat-head">

@@ -25,8 +25,9 @@
               <div class="remarks-title">
                 <span>商品介绍</span>
               </div>
-              <div class="item-intro-img" ref="itemIntroGoods">
-                <img :src="item" alt="" v-for="(item,index) in getGoodsDetail.goodsDesc" :key="index">
+              <div class="item-intro-img" ref="itemIntroGoods" v-for="(item,index) in getGoodsDetail.goodsDesc">
+                <h1>{{item}}</h1>
+                <!--<img :src="item" alt="" v-for="(item,index) in getGoodsDetail.goodsDesc" :key="index">-->
               </div>
             </TabPane>
             <TabPane label="规格参数">

@@ -5,7 +5,7 @@
         <Menu active-name="1-2" theme="light" width="auto" @on-select="onSelect">
           <div class="user-icon">
             <div class="user-img">
-              <img src="static/img/head.png">
+              <img src="static/img/header.jpg">
             </div>
             <p>fimi.zhuang</p>
           </div>

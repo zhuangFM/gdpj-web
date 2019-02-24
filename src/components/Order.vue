@@ -204,6 +204,7 @@
         const data = {
           buyerId: this.userInfo.data.id,
           totalMoney: this.totalPrice,
+          addressId: this.address[this.checkAddress.index].id
           // detail:goodsList,
         };
         //生成订单

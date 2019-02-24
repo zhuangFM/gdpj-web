@@ -52,7 +52,7 @@
               <p>￥{{item.price}}</p>
             </div>
             <div class="other-buy-btn-box">
-              <router-link to="/goodsDetail">
+              <router-link :to="{path: '/goodsList', query: { searchData: item.intro }}">
                 <button class="other-buy-btn"><Icon type="ios-cart"></Icon> 加入购物车</button>
               </router-link>
             </div>
