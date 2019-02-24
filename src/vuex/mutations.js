@@ -23,6 +23,8 @@ export const FLASH_USER_INFO = (state, data) => {
 export const SIGN_OUT_USER = (state) => {
   localStorage.removeItem('info');
   state.userInfo = {};
+  state.shoppingCart = [];
+  state.newShoppingCart = [];
 };
 
 // 设置加载状态

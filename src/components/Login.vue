@@ -1,5 +1,5 @@
 <template>
-<!-- 登陆页面 -->
+  <!-- 登陆页面 -->
   <div>
     <Row class="container">
       <i-col span="13" offset="2" class="login-img-box">
@@ -13,19 +13,19 @@
           <div class="form-box">
             <Form ref="formInline" :model="formDate" :rules="ruleInline">
               <FormItem prop="username">
-                  <i-input type="text" v-model="formDate.username" clearable size="large" placeholder="手机号">
-                      <Icon type="person" slot="prepend"></Icon>
-                  </i-input>
+                <i-input type="text" v-model="formDate.username" clearable size="large" placeholder="手机号">
+                  <Icon type="person" slot="prepend"></Icon>
+                </i-input>
               </FormItem>
               <FormItem prop="password">
-                  <i-input type="password" v-model="formDate.password" clearable size="large" placeholder="密码">
-                      <Icon type="ios-locked-outline" slot="prepend"> </Icon>
-                  </i-input>
+                <i-input type="password" v-model="formDate.password" clearable size="large" placeholder="密码">
+                  <Icon type="ios-locked-outline" slot="prepend"></Icon>
+                </i-input>
               </FormItem>
               <FormItem>
-                  <Button type="error" size="large" @click="handleSubmit('formInline')" long>登陆</Button>
+                <Button type="error" size="large" @click="handleSubmit('formInline')" long>登陆</Button>
               </FormItem>
-          </Form>
+            </Form>
           </div>
         </div>
       </i-col>
@@ -35,101 +35,129 @@
 </template>
 
 <script>
-import Footer from '@/components/footer/Footer';
-import store from '@/vuex/store';
-import { sign } from '@/utils/tool';
-import { mapMutations, mapActions } from 'vuex';
-export default {
-  name: 'Login',
-  data () {
-    return {
-      formDate: {
-        username: '',
-        password: ''
-      },
-      ruleInline: {
-        username: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
-          { type: 'string', pattern: /^1[3|4|5|7|8][0-9]{9}$/, message: '手机号格式出错', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { type: 'string', min: 6, message: '密码不能少于6位', trigger: 'blur' }
-        ]
+  import Footer from '@/components/footer/Footer';
+  import store from '@/vuex/store';
+  import {sign} from '@/utils/tool';
+  import {mapMutations, mapActions,mapState} from 'vuex';
+
+  export default {
+    name: 'Login',
+    data () {
+      return {
+        formDate: {
+          username: '',
+          password: ''
+        },
+        ruleInline: {
+          username: [
+            {required: true, message: '请输入手机号', trigger: 'blur'},
+            {type: 'string', pattern: /^1[3|4|5|7|8][0-9]{9}$/, message: '手机号格式出错', trigger: 'blur'}
+          ],
+          password: [
+            {required: true, message: '请输入密码', trigger: 'blur'},
+            {type: 'string', min: 6, message: '密码不能少于6位', trigger: 'blur'}
+          ]
+        },
+        redirectToShoppingCart: false,
+        shoppingCartData: {},
+      };
+    },
+    computed:{
+      ...mapState(['userInfo']),
+    },
+    methods: {
+      ...mapMutations(['SET_USER_LOGIN_INFO']),
+      ...mapActions(['login','addShoppingCart']),
+      handleSubmit (name) {
+        const father = this;
+        console.log(this.formDate.username);
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            const data = {
+              phone: this.formDate.username,
+              password: sign(this.formDate.password)
+            };
+            this.login(data).then(data => {
+              if (data) {
+                this.$Message.success('登陆成功');
+                if (this.redirectToShoppingCart) {
+                  this.shoppingCartData.uid = this.userInfo.data.id;
+                  this.addShoppingCart(this.shoppingCartData).then(ret => {
+                    if (ret) {
+                      this.$Message.success('添加购物车成功');
+                      this.$router.push('/shoppingCart');
+                    } else {
+                      this.$Message.error('添加购物车出错');
+                    }
+                  });
+                } else {
+                  father.$router.push('/');
+                }
+              } else {
+                this.$Message.error('用户名或密码错误');
+              }
+            });
+          } else {
+            this.$Message.error('请填写正确的用户名或密码');
+          }
+        });
       }
-    };
-  },
-  methods: {
-    ...mapMutations(['SET_USER_LOGIN_INFO']),
-    ...mapActions(['login']),
-    handleSubmit (name) {
-      const father = this;
-      console.log(this.formDate.username);
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          const data = {
-            phone: this.formDate.username,
-            password: sign(this.formDate.password)
-          };
-          this.login(data).then(data => {
-            if (data) {
-              this.$Message.success('登陆成功');
-              father.$router.push('/');
-            } else {
-              this.$Message.error('用户名或密码错误');
-            }
-          });
-        } else {
-          this.$Message.error('请填写正确的用户名或密码');
-        }
-      });
-    }
-  },
-  components: {
-    Footer
-  },
-  store
-};
+    },
+    created () {
+      this.redirectToShoppingCart = this.$route.query.redirectToShoppingCart ? this.$route.query.redirectToShoppingCart : false;
+      this.shoppingCartData = this.$route.query.shoppingCartData ? this.$route.query.shoppingCartData : {};
+    },
+    components: {
+      Footer
+    },
+    store
+  };
 </script>
 
 <style scoped>
-.container {
-  margin-top: 30px;
-  height: 485px;
-  background-color: #fff;
-}
-.login-img-box {
-  height: 485px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.login-img-box>img {
-  width: 68%;
-}
-.login-box {
-  height: 485px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.login-container {
-  width: 80%;
-  height: 280px;
-  border: #ED3F14 solid 1px;
-}
-.login-header {
-  height: 50px;
-  font-size: 20px;
-  text-align: center;
-  line-height: 50px;
-  letter-spacing: 5px;
-  color: #fff;
-  background-color: #ED3F14;
-}
-.form-box {
-  width: 80%;
-  margin: 30px auto;
-}
+  .container {
+    margin-top: 30px;
+    height: 485px;
+    background-color: #fff;
+  }
+
+  .login-img-box {
+    height: 485px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-img-box > img {
+    width: 68%;
+  }
+
+  .login-box {
+    height: 485px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-container {
+    width: 80%;
+    height: 280px;
+    border: #ED3F14 solid 1px;
+  }
+
+  .login-header {
+    height: 50px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 50px;
+    letter-spacing: 5px;
+    color: #fff;
+    background-color: #ED3F14;
+  }
+
+  .form-box {
+    width: 80%;
+    margin: 30px auto;
+  }
 </style>
