@@ -119,15 +119,15 @@ export const loadCarouselItems = ({commit}) => {
   return new Promise((resolve, reject) => {
     const data = {
       carouselItems: [
-        'static/img/nav/1.jpg',
-        'static/img/nav/2.jpg',
-        'static/img/nav/3.jpg',
-        'static/img/nav/4.jpg',
-        'static/img/nav/5.jpg'
+        'static/img/nav/n1.jpg',
+        'static/img/nav/n2.jpg',
+        'static/img/nav/n3.jpg',
+        // 'static/img/nav/4.jpg',
+        // 'static/img/nav/5.jpg'
       ],
       activity: [
-        'static/img/nav/nav_showimg1.jpg',
-        'static/img/nav/nav_showimg2.jpg'
+        'static/img/nav/nav_showimg-n1.jpg',
+        'static/img/nav/nav_showimg-n2.jpg'
       ]
     };
     commit('SET_CAROUSELITEMS_INFO', data);
