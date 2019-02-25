@@ -1,6 +1,13 @@
 <template>
   <div>
-    <Sreach></Sreach>
+    <!--<Sreach></Sreach>-->
+    <div>
+      <div class="container" style="width:460px;">
+        <i-input v-model="searchData.foodstuffName" size="large" class="sreach" placeholder="输入你想查找的商品">
+          <Button slot="append" icon="ios-search" @click="search"></Button>
+        </i-input>
+      </div>
+    </div>
     <GoodsListNav></GoodsListNav>
     <div class="container">
       <div class="bread-crumb">
@@ -134,7 +141,10 @@
         this.searchData.orderBy = data;
         this.searchData.foodstuffName = this.$route.query.searchData;
         this.getGoodsByName(this.searchData);
-      }
+      },
+      search(){
+        this.getGoodsByName(this.searchData);
+      },
     },
     created() {
       // this.loadGoodsList();
@@ -332,6 +342,9 @@
     margin-top: 20px;
     display: flex;
     justify-content: flex-end;
+  }
+  .sreach {
+    margin: 5px 0px;
   }
 
   /* ---------------商品栏结束------------------- */
